@@ -2,61 +2,50 @@ import java.util.Arrays;
 
 public class SortUsingMergeSort {
     public static void main(String[] args) {
-        int[] array = {3,13,4,55,22,2,5,98,6,4,2};
-        sortWithMergeSort(array);
+        int[] array = {10,9,8,7,6,5,4,3,2,1};
+        mergeSort(array, 0, array.length - 1);
+        System.out.println(Arrays.toString(array));
     }
 
-    public static void sortWithMergeSort(int[] array) {
-        divideArray(array,0, array.length-1);
+    private static void mergeSort(int[] array, int start, int end) {
+        int mid = (start + end) / 2;
+        if (end - start <= 0) {
+            return ;
+        } else {
+            mergeSort(array, start, mid);
+            mergeSort(array, mid + 1, end);
+            merge(array, start, mid, end);
+        }
+        return ;
     }
 
-    private static int divideArray(int[] array, int start, int end) {
-        if(end-start<=0){
-//            System.out.println(array[start]);
-            return 0;
-        }
-        else {
-            int mid=(start+end)/2;
-            divideArray(array,start,mid);
-            divideArray(array,mid+1,end);
-//            System.out.println(Arrays.toString(Arrays.copyOfRange(array,start,end+1)));
-            merge(array,start,mid+1,end+1);
-        }
-        return 0;
-    }
-    private static void merge(int[] array,int left,int mid, int right){
-        int[] leftArray=Arrays.copyOfRange(array,left,mid);
-        int[] rightArray = Arrays.copyOfRange(array,mid,right+1);
+    public static void merge(int[] array, int start, int mid, int end) {
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int index = start;
 
-        System.out.println(Arrays.toString(leftArray));
-        System.out.println(Arrays.toString(rightArray));
+        int[] leftArray = Arrays.copyOfRange(array, start, mid + 1);
+        int[] rightArray = Arrays.copyOfRange(array, mid + 1, end + 1);
 
-        int index=left,l=0,m=0;
-
-        while(index<=right-left){
-            System.out.println("Merged Array"+Arrays.toString(array));
-            if(l>=mid-left){
-                array[index]=rightArray[m];
-                m++;
+            while (index<=end){
+                if(leftIndex==leftArray.length){
+                    array[index] = rightArray[rightIndex];
+                    rightIndex++;
+                }
+                else if(rightIndex==rightArray.length){
+                    array[index] = leftArray[leftIndex];
+                    leftIndex++;
+                }
+                else if (leftArray[leftIndex] < rightArray[rightIndex]) {
+                    array[index] = leftArray[leftIndex];
+                    leftIndex++;
+                }
+                else {
+                    array[index] = rightArray[rightIndex];
+                    rightIndex++;
+                }
                 index++;
             }
-            else if(m>=right-mid){
-                array[index]=leftArray[l];
-                l++;
-                index++;
-            }
-            else if (leftArray[l]<=rightArray[m]) {
-                array[index]=leftArray[l];
-                index++;
-                l++;
-            } else if (leftArray[l]>=rightArray[m]) {
-                array[index]=rightArray[m];
-                index++;
-                m++;
-            }
-
-        }
-//        System.out.println("Merged Array"+Arrays.toString(array));
-
+        return;
     }
 }
