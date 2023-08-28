@@ -51,27 +51,27 @@ public class CircleIntersectingOrNot {
         else if (distance < (r1 + r2) && distance > Math.abs(r1 - r2)) {
             // x^2 +y^2+2gx+2fy+c=0
             //c=g^2+f^2-r^2
-            double g=-x1;
-            double f=-y1;
-            double c=(g*g)+(f*f)-(r1*r1);
+            double g1=-x1;
+            double f1=-y1;
+            double c1=(g1*g1)+(f1*f1)-(r1*r1);
 
             double[] eq1 = new double[5];
             eq1[0]=1;
             eq1[1]=1;
-            eq1[2]=2*g;
-            eq1[3]=2*f;
-            eq1[4]=c;
+            eq1[2]=2*g1;
+            eq1[3]=2*f1;
+            eq1[4]=c1;
 
-            g=-x2;
-            f=-y2;
-            c=(g*g)+(f*f)-(r2*r2);
+            double g2=-x2;
+            double f2=-y2;
+            double c2=(g2*g2)+(f2*f2)-(r2*r2);
 
             double[] eq2 = new double[5];
             eq2[0]=1;
             eq2[1]=1;
-            eq2[2]=2*g;
-            eq2[3]=2*f;
-            eq2[4]=c;
+            eq2[2]=2*g2;
+            eq2[3]=2*f2;
+            eq2[4]=c2;
 
             System.out.println("Eq1 "+ Arrays.toString(eq1) +"  Eq2 "+Arrays.toString(eq2) );
 
@@ -79,26 +79,15 @@ public class CircleIntersectingOrNot {
             for (int i = 0; i < eq1.length; i++) {
                 finalEq[i]=eq2[i]-eq1[i];
             }
-
+            double p=(f2-f1)/(g1-g2);
+            double q=(c1-c2)/((g1-g2)*2);
             System.out.println("finalEq "+ Arrays.toString(finalEq)  );
-            double xe=0;
-            double oldxe=0;
-            double ye=0;
-            for (int i = 0; i < 100; i++) {
-                ye=finalEq[4]-xe*finalEq[2];
+            double a=Math.pow(p,2d)+1;
+            double b= 2*(g1+f1-p*q);
+            double c=(Math.pow(q,2)*q)+c1;
 
-                if(ye==finalEq[3]){
-                    System.out.println("x :"+ xe+" y : "+ye);
-                    break;
-                }
-                else{
-//                    xe++;
-                    System.out.println("x :"+ xe+" y : "+ye);
-
-                }
-                xe--;
-            }
-
+            double yr1=-b-Math.sqrt((b*b)-(4*a*c));
+            System.out.println(yr1);
             return 1;
         }
         else {
