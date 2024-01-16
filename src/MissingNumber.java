@@ -10,6 +10,8 @@ public class MissingNumber {
         int[] nums={9,6,4,2,3,5,7,0,1};
         int missingNumberUsingMap = findMissingNumberUsingMap(nums);
         System.out.println(missingNumberUsingMap);
+        int missingNumber = findMissingNumber(nums);
+        System.out.println(missingNumber);
     }
 
     public static int findMissingNumberUsingSet(int[] nums){
@@ -30,5 +32,14 @@ public class MissingNumber {
             return first.getAsInt();
         }
         return -1;
+    }
+
+    public static int findMissingNumber(int[] nums){
+        int sum = 0;
+        for (int num: nums) {
+            sum+=num;
+        }
+        double sumOfN=(nums.length/2d)*(nums.length+1);
+        return (int)(sumOfN-sum);
     }
 }
