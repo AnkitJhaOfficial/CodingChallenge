@@ -1,6 +1,7 @@
 public class Atoi {
     public static void main(String[] args) {
-        String s="      -4193 w 1 ith words";
+//        String s="      -4193 w 1 ith words";
+        String s = "-91283472332";
         int atoi = myAtoi(s);
         System.out.println(atoi);
     }
@@ -15,12 +16,16 @@ public class Atoi {
         else if(s.charAt(0)=='+'){
             s=s.substring(1);
         }
-        int number = s.chars().takeWhile(Character::isDigit)
-                .map(value -> Character.digit(value,10))
-                .reduce(0, (a, b) -> a * 10 + b);
+        long number = s.chars().takeWhile(Character::isDigit)
+                .mapToLong(value -> Character.digit(value,10))
+                .reduce(0, (a, b) -> {
+                    if(a * 10 + b>=Integer.MAX_VALUE)
+                        return Integer.MAX_VALUE;
+                    return a * 10 + b;
+                });
         if(isNegetive){
             number=-number;
         }
-        return number;
+        return (int)number;
     }
 }
